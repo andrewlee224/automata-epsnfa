@@ -6,7 +6,7 @@
 
 import java.io.*;
 
-public class epsnfa {
+public class EpsilonNFA {
 	static int maxn = 200; //maximum number of states
 	static int symbol = 2; //number of symbols ('0','1')
 	static int epssymbol = 2;
@@ -51,7 +51,20 @@ public class epsnfa {
 	{
 		int [] st=new int[2];
 
-		//Please fill in the program here
+		int newStartState = incCapacity();
+		int newFinishState = incCapacity();
+		
+		// connect new states to existing automatons
+		// connect new start state to old start states
+		addEdge(newStartState, epssymbol, s1);
+		addEdge(newStartState, epssymbol, s2);
+		
+		// connect old finish states to new finish state
+		addEdge(t1, epssymbol, newFinishState);
+		addEdge(t2, epssymbol, newFinishState);
+		
+		st[0] = newStartState;
+		st[1] = newFinishState;
 		
 		return st;
 	}
@@ -272,6 +285,6 @@ public class epsnfa {
 	}
 	
 	public static void main(String args[]) {
-		new epsnfa().Start("testRE.in");
+		new EpsilonNFA().Start("testRE.in");
 	}
 }

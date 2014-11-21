@@ -23,7 +23,7 @@ public class Submit {
     /**
      * Test on Sample
      */
-    String sampleoutput=new epsnfa().Start("sampleRE.in");
+    String sampleoutput=new EpsilonNFA().Start("sampleRE.in");
     System.out.println("**********************\nTest on sample input (sampleRE.in)......");
     if (!sampleoutput.equals("101\n0\n1\n0\n101\n"))
     {
@@ -133,7 +133,7 @@ public class Submit {
 
 
   protected String output(int partId, String ch_aux) {
-    String output=new epsnfa().Start("testRE.in");
+    String output=new EpsilonNFA().Start("testRE.in");
 
     return output;
   }
