@@ -49,7 +49,7 @@ public class EpsilonNFA {
 	//return an array of length 2, where the first element is the start state of the combined NFA. the second being the final state 
 	int[] union(int s1,int t1,int s2,int t2)
 	{
-		int [] st=new int[2];
+		int [] st = new int[2];
 
 		int newStartState = incCapacity();
 		int newFinishState = incCapacity();
@@ -73,8 +73,12 @@ public class EpsilonNFA {
 	//return an array of length 2, where the first element is the start state of the combined NFA. the second being the final state 
 	int[] concat(int s1,int t1,int s2,int t2)
 	{
-		int [] st=new int[2];
-		//Please fill in the program here
+		int [] st = new int[2];
+		
+		addEdge(t1, epssymbol, s2);
+		
+		st[0] = s1;
+		st[1] = t2;
 		
 		return st;
 	}
@@ -83,8 +87,24 @@ public class EpsilonNFA {
 	//return an array of length 2, where the first element is the start state of the closure Epsilon-NFA. the second being the final state 
 	int[] clo(int s,int t)
 	{
-		int [] st=new int[2];
-		//Please fill in the program here
+		int [] st = new int[2];
+		
+		int newStartState = incCapacity();
+		int newFinishState = incCapacity();
+		
+		addEdge(newStartState, epssymbol, s);
+		addEdge(t, epssymbol, newFinishState);
+		
+		// repeat symbol between original states one or
+		// more times 
+		addEdge(t, epssymbol, s);
+		
+		// allow zero repetitions of symbol between original
+		// states
+		addEdge(newStartState, epssymbol, newFinishState);
+		
+		st[0] = newStartState;
+		st[1] = newFinishState;
 		
 		return st;
 	}
@@ -241,8 +261,9 @@ public class EpsilonNFA {
 	{
 		String result="";
 		//read data case line by line from file
-		try{
-			FileInputStream fstream = new FileInputStream(filename);
+		try {
+			FileInputStream fstream = new FileInputStream("/home/andrew/javaworkspace/"
+					+ "PA1_java/src/" + filename);
 			// Get the object of DataInputStream
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -277,8 +298,9 @@ public class EpsilonNFA {
 			}
 			//Close the input stream
 			in.close();
-		}catch (Exception e){//Catch exception if any
+		} catch (Exception e){//Catch exception if any
 			result=result+"error\n";//System.err.println("Error: " + e.getLocalizedMessage());
+			System.err.println(e.getMessage());
 		}
 		
 		return result;
